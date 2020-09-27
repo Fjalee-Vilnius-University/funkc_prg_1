@@ -1,4 +1,4 @@
-import Task1Message as M
+import Task1Message
 import Data.List as L
 import Data.Char as C
 
@@ -83,3 +83,34 @@ removeFiveChars a = L.drop 5 a
 parseChar :: (Char, Char, Char) -> Char
 parseChar ('1',':',a) = a
 parseChar _ = error "Incorrect parameter"
+
+-------------------------------------------------------------------------------------
+-- expectedFrom = ([0, 1, 2, 0, 1, 2, 0, 1, 2], [0, 0, 0, 1, 1, 1, 2, 2, 2], ['X', 'O', 'O', 'X', 'O', 'X', 'X', 'X', 'O'])
+
+convert ::([Integer], [Integer], [Char]) -> [(Integer, Integer, Char)]
+convert (xs, ys, vs) =
+    let 
+        magicArr = magic (magic (magic (magic (magic (magic (magic (magic (magic (xs, ys, vs, [])))))))))
+    in
+        lastArray magicArr
+
+lastArray :: ([Integer], [Integer], [Char], [(Integer, Integer, Char)]) -> [(Integer, Integer, Char)]
+lastArray (xs, ys, vs, arr) = arr
+
+
+--newTupleFromFstItems 
+magic :: ([Integer], [Integer], [Char], [(Integer, Integer, Char)]) -> ([Integer], [Integer], [Char], [(Integer, Integer, Char)])
+magic (xs, ys, vs, arr) = 
+    let
+        a = (xs !! 0)
+        newXs = tail xs
+
+        b = (ys !! 0)
+        newYs = tail ys
+
+        c = (vs !! 0)
+        newVs = tail vs
+
+        newArr = arr ++ [(a, b, c)]
+    in
+        (newXs, newYs, newVs, newArr)
