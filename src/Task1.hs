@@ -87,19 +87,20 @@ parseChar _ = error "Incorrect parameter"
 -------------------------------------------------------------------------------------
 -- expectedFrom = ([0, 1, 2, 0, 1, 2, 0, 1, 2], [0, 0, 0, 1, 1, 1, 2, 2, 2], ['X', 'O', 'O', 'X', 'O', 'X', 'X', 'X', 'O'])
 
-convert ::([Integer], [Integer], [Char]) -> [(Integer, Integer, Char)]
+--convert ::([Integer], [Integer], [Char]) -> [(Integer, Integer, Char)]
+convert ::From -> To
 convert (xs, ys, vs) =
     let 
         magicArr = magic (magic (magic (magic (magic (magic (magic (magic (magic (xs, ys, vs, [])))))))))
     in
         lastArray magicArr
 
-lastArray :: ([Integer], [Integer], [Char], [(Integer, Integer, Char)]) -> [(Integer, Integer, Char)]
+lastArray :: ([Int], [Int], [Char], [(Int, Int, Char)]) -> [(Int, Int, Char)]
 lastArray (xs, ys, vs, arr) = arr
 
 
 --newTupleFromFstItems 
-magic :: ([Integer], [Integer], [Char], [(Integer, Integer, Char)]) -> ([Integer], [Integer], [Char], [(Integer, Integer, Char)])
+magic :: ([Int], [Int], [Char], [(Int, Int, Char)]) -> ([Int], [Int], [Char], [(Int, Int, Char)])
 magic (xs, ys, vs, arr) = 
     let
         a = (xs !! 0)
