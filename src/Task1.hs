@@ -16,11 +16,27 @@ import Data.Char as C
 -- expectedFrom = ([0, 1, 2, 0, 1, 2, 0, 1, 2], [0, 0, 0, 1, 1, 1, 2, 2, 2], ['X', 'O', 'O', 'X', 'O', 'X', 'X', 'X', 'O'])
 --"1:01:11:21:01:11:21:01:11:2e2:ysl1:01:01:01:11:11:11:21:21:2e2:vsl1:X1:O1:O1:X1:O1:X1:X1:X1:Oee"
 
-parse :: String -> String
-parse message = removeSixChars message
+parse :: String -> (String, String, String)
+parse message = 
+    let
+        fstChCut = L.drop 1 message
+        fromArr = splitStringInto3 fstChCut
+    in
+        fromArr
 
--- parseString :: String -> String
--- parseString = 
+
+splitStringInto3 :: String -> (String, String, String)
+splitStringInto3 a =
+    let
+        fstSplitTuple = splitAt 33 a
+        fstString = fst fstSplitTuple
+        sndEl = snd fstSplitTuple
+        sndSplitTuple = splitAt 33 sndEl
+        sndString = fst sndSplitTuple
+        trdString = snd sndSplitTuple
+        tuple = (fstString, sndString, trdString)
+    in
+        tuple
 
 removeSixChars :: String -> String
 removeSixChars a = L.drop 6 a
