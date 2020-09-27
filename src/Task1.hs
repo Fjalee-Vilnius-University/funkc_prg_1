@@ -38,12 +38,13 @@ splitStringInto3 a =
     in
         tuple
 
-removeSixChars :: String -> String
-removeSixChars a = L.drop 6 a
 
 parseChar :: String -> [Char]
 parseChar ('1':':':a) = a
 parseChar _ = error "Incorrect parameter"
+
+-- removeSixChars :: String -> String
+-- removeSixChars a = L.drop 6 a
 
 -- tempRepeat :: Int -> String -> String
 -- repeatTemp times message = 
