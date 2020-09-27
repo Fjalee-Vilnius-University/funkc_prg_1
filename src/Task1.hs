@@ -21,6 +21,9 @@ parse message = message
 -- parseString :: String -> String
 -- parseString = 
 
+removeSixChars :: String -> String
+removeSixChars a = L.drop 6 a
+
 parseChar :: String -> [Char]
 parseChar ('1':':':a) = a
 parseChar _ = "Function received not Ben encoded 1 char"
