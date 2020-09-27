@@ -19,7 +19,7 @@ parse :: String -> ([Int], [Int], [Char])
 parse message = 
     let
         fstChCut = L.drop 1 message
-        threeBenCodesWName = tupleToArr (splitStringInto3 fstChCut)
+        threeBenCodesWName = splitStringInto3 fstChCut
         threeBenCodes = map removeFiveChars threeBenCodesWName
         arraysOfBenCoddedChars = map splitStringEvery3 threeBenCodes
         arrFromStrings = map benCodeArrToArr arraysOfBenCoddedChars
@@ -37,9 +37,6 @@ stringToIntArray (h:t) = [digitToInt h] ++ stringToIntArray t
 benCodeArrToArr :: [(Char,Char,Char)] -> [Char]
 benCodeArrToArr [] = []
 benCodeArrToArr (h:t) = [parseChar h] ++ benCodeArrToArr t
-
-tupleToArr :: (a, a, a) -> [a]
-tupleToArr (a, b, c) = [a, b, c]
 
 splitStringEvery3 :: [a] -> [(a,a,a)]
 splitStringEvery3 ([]) = []
