@@ -47,18 +47,15 @@ splitStringEvery3 (_:[]) = []
 splitStringEvery3 (_:_:[]) = []
 splitStringEvery3 (h1:h2:h3:t) = [(h1, h2, h3)] ++ splitStringEvery3 t
 
-splitStringInto3 :: String -> (String, String, String)
+splitStringInto3 :: String -> [String]
 splitStringInto3 a =
     let
-        fstSplitTuple = splitAt 33 a
-        fstString = fst fstSplitTuple
-        sndEl = snd fstSplitTuple
-        sndSplitTuple = splitAt 33 sndEl
-        sndString = fst sndSplitTuple
-        trdString = snd sndSplitTuple
-        tuple = (fstString, sndString, trdString)
+        fstStr = take 33 a
+        sndStr = drop 33 (take 66 a)
+        trdStr = drop 66 (take 99 a)
     in
-        tuple
+        [fstStr, sndStr, trdStr]
+        
 
 removeFiveChars :: String -> String
 removeFiveChars a = L.drop 5 a
