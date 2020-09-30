@@ -1,5 +1,6 @@
+module Task1 where
 import Task1Message
-import Data.List as L
+import Data.List as L ( drop )
 import Data.Char as C
 
 -- parse :: Int    -- ^ Size of the matrix (number of columns or rows)
@@ -25,9 +26,9 @@ import Data.Char as C
 -- "2:vsl1:X1:O1:O1:X1:O1:X1:X1:X1:Oe"]
 
 -- threeBenCodes
---["l1:01:11:21:01:11:21:01:11:2e"
--- "l1:01:01:01:11:11:11:21:21:2e"
--- "l1:X1:O1:O1:X1:O1:X1:X1:X1:Oe"]
+--["1:01:11:21:01:11:21:01:11:2e"
+-- "1:01:01:01:11:11:11:21:21:2e"
+-- "1:X1:O1:O1:X1:O1:X1:X1:X1:Oe"]
 
 -- arraysOfBenCoddedChars
 --[[(1:0),(1:1),(1:2),(1:0),(1:1),(1:2),(1:0),(1:1),(1:2)]
@@ -38,8 +39,8 @@ import Data.Char as C
 --["012012012", "000111222", "XOOXOXXXO"]
 
  
-parse :: String -> ([Int], [Int], [Char])
-parse message = 
+parse :: Int -> String -> ([Int], [Int], [Char])
+parse nmSq message = 
     let
         fstChCut = L.drop 1 message
         threeBenCodesWName = splitStringInto3 fstChCut
@@ -87,9 +88,8 @@ parseChar _ = error "Incorrect parameter"
 -------------------------------------------------------------------------------------
 -- expectedFrom = ([0, 1, 2, 0, 1, 2, 0, 1, 2], [0, 0, 0, 1, 1, 1, 2, 2, 2], ['X', 'O', 'O', 'X', 'O', 'X', 'X', 'X', 'O'])
 
---convert ::([Integer], [Integer], [Char]) -> [(Integer, Integer, Char)]
-convert ::From -> To
-convert (xs, ys, vs) =
+convert :: Int -> From -> To
+convert nmSq (xs, ys, vs) =
     let 
         magicArr = magic (magic (magic (magic (magic (magic (magic (magic (magic (xs, ys, vs, [])))))))))
     in
@@ -99,19 +99,9 @@ lastArray :: ([Int], [Int], [Char], [(Int, Int, Char)]) -> [(Int, Int, Char)]
 lastArray (xs, ys, vs, arr) = arr
 
 
---newTupleFromFstItems 
 magic :: ([Int], [Int], [Char], [(Int, Int, Char)]) -> ([Int], [Int], [Char], [(Int, Int, Char)])
-magic (xs, ys, vs, arr) = 
+magic ((h:t), (h1:t1), (h2:t2), arr)=
     let
-        a = (xs !! 0)
-        newXs = tail xs
-
-        b = (ys !! 0)
-        newYs = tail ys
-
-        c = (vs !! 0)
-        newVs = tail vs
-
-        newArr = arr ++ [(a, b, c)]
+        newArr = arr ++ [(h, h1, h2)]
     in
-        (newXs, newYs, newVs, newArr)
+        (t, t1, t2, newArr)
