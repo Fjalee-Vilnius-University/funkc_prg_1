@@ -43,16 +43,28 @@ parse :: Int -> String -> ([Int], [Int], [Char])
 parse nmSq message = 
     let
         fstChCut = L.drop 1 message
-        threeBenCodesWName = splitStringInto3 fstChCut
+
+        strLenForArray = (getNmOfChBeforeE 0 fstChCut) - 5
+
+        threeBenCodesWName = splitStringInto3 (strLenForArray + 6) fstChCut
         threeBenCodes = map removeFiveChars threeBenCodesWName
         arraysOfBenCoddedChars = map splitStringEvery3 threeBenCodes
         arrFromStrings = map benCodeArrToArr arraysOfBenCoddedChars
         xs = stringToIntArray (arrFromStrings !! 0)
         ys = stringToIntArray (arrFromStrings !! 1)
         vs = arrFromStrings !! 2
-
     in
         (xs, ys, vs)
+
+getNmOfChBeforeE :: Int -> [Char] -> Int
+getNmOfChBeforeE nmOfNotE [] = error "Incorrect parameter"
+getNmOfChBeforeE nmOfNotE (h:t) =
+    let
+        ats = if (h == 'e')
+            then nmOfNotE
+            else getNmOfChBeforeE (nmOfNotE+1) t
+    in
+        ats
 
 stringToIntArray :: [Char] -> [Int]
 stringToIntArray [] = []
@@ -68,12 +80,12 @@ splitStringEvery3 (_:[]) = []
 splitStringEvery3 (_:_:[]) = []
 splitStringEvery3 (h1:h2:h3:t) = [(h1, h2, h3)] ++ splitStringEvery3 t
 
-splitStringInto3 :: String -> [String]
-splitStringInto3 a =
+splitStringInto3 :: Int -> String -> [String]
+splitStringInto3 strLen a =
     let
-        fstStr = take 33 a
-        sndStr = drop 33 (take 66 a)
-        trdStr = drop 66 (take 99 a)
+        fstStr = take strLen a
+        sndStr = drop strLen (take (strLen*2) a)
+        trdStr = drop (strLen*2) (take (strLen*3) a)
     in
         [fstStr, sndStr, trdStr]
         
