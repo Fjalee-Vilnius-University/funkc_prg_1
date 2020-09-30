@@ -98,22 +98,17 @@ parseChar ('1',':',a) = a
 parseChar _ = error "Incorrect parameter"
 
 -------------------------------------------------------------------------------------
--- expectedFrom = ([0, 1, 2, 0, 1, 2, 0, 1, 2], [0, 0, 0, 1, 1, 1, 2, 2, 2], ['X', 'O', 'O', 'X', 'O', 'X', 'X', 'X', 'O'])
 
 convert :: Int -> From -> To
-convert nmSq (xs, ys, vs) =
-    let 
-        magicArr = magic (magic (magic (magic (magic (magic (magic (magic (magic (xs, ys, vs, [])))))))))
-    in
-        lastArray magicArr
+convert nmSq (xs, ys, vs) = lastArray (magic (xs, ys, vs, []))
 
 lastArray :: ([Int], [Int], [Char], [(Int, Int, Char)]) -> [(Int, Int, Char)]
 lastArray (xs, ys, vs, arr) = arr
 
-
 magic :: ([Int], [Int], [Char], [(Int, Int, Char)]) -> ([Int], [Int], [Char], [(Int, Int, Char)])
-magic ((h:t), (h1:t1), (h2:t2), arr)=
+magic ((h:t), (h1:t1), (h2:t2), arr) =
     let
         newArr = arr ++ [(h, h1, h2)]
     in
-        (t, t1, t2, newArr)
+        magic (t, t1, t2, newArr)
+magic ([], [], [], arr) = ([], [], [], arr)
